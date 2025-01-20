@@ -4,10 +4,7 @@ pipeline {
         stage('Install Node.js') {
             steps {
                 script {
-                    sh '''
-                    curl -sL https://deb.nodesource.com/setup_14.x | -E bash -
-                    apt-get install -y nodejs npm
-                    '''
+                    sh 'apt-get install -y nodejs npm'
                 }
             }
         }
