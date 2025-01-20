@@ -1,20 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Install Node.js') {
-            steps {
-                script {
-                    // Check if Node.js is installed, otherwise install
-                    def nodeVersion = sh(script: 'node -v', returnStatus: true)
-                    if (nodeVersion != 0) {
-                        error "Node.js is not installed. Please install Node.js on the Jenkins agent."
-                    }
-                }
-            }
-        }
         stage('Build') { 
             steps {
-                sh 'npm install' 
+                sh 'sudo apt-get install nodejs npm' 
             }
         }
     }
