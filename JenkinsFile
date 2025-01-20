@@ -1,9 +1,19 @@
 pipeline {
     agent any
     stages {
-        stage('Build') { 
+        stage('Install Node.js') {
             steps {
-                sh 'apt-get install nodejs npm' 
+                script {
+                    sh '''
+                    curl -sL https://deb.nodesource.com/setup_14.x | -E bash -
+                    apt-get install -y nodejs npm
+                    '''
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'  // Now that Node.js is installed, run npm install
             }
         }
     }
