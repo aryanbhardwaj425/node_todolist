@@ -4,11 +4,11 @@ pipeline {
         stage('Install Node.js') {
             steps {
                 script {
-                    // Install Node.js (example for Ubuntu)
-                    sh '''
-                    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-                    sudo apt-get install -y nodejs
-                    '''
+                    // Check if Node.js is installed, otherwise install
+                    def nodeVersion = sh(script: 'node -v', returnStatus: true)
+                    if (nodeVersion != 0) {
+                        error "Node.js is not installed. Please install Node.js on the Jenkins agent."
+                    }
                 }
             }
         }
@@ -19,5 +19,3 @@ pipeline {
         }
     }
 }
-
-
