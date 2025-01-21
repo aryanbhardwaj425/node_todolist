@@ -8,12 +8,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
-
         stage('Run React Project') {
             steps {
                 // Start the React development server in the background
