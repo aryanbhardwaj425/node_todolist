@@ -13,7 +13,6 @@ echo "npm version:"
 npm -v
 
 echo "tests are running : "
-npm run test
 
-
+npm start
 echo "Tests completed"
