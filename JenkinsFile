@@ -16,13 +16,6 @@ pipeline {
                 
                 // Wait for the development server to be ready (optional sleep)
                 echo "Waiting for server to start..."
-                sleep(time: 10, unit: 'SECONDS')
-
-                // Output the port on which the React project is running
-                echo "React project is running on port 3000 (default)."
-                // If the port is dynamic, capture it using the `lsof` or other methods:
-                // PORT=$(lsof -i -P -n | grep LISTEN | grep 'node' | awk '{print $9}' | cut -d ':' -f2)
-                // echo "React project is running on port: $PORT"
                 
                 echo "React server is likely running on port 3000 by default, unless specified otherwise in the .env file"
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
