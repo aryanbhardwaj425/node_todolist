@@ -1,24 +1,50 @@
-
-
 pipeline {
     agent any
+
     stages {
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
+
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deliver') { 
+
+        stage('Run React Project') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
-                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                sh './jenkins/scripts/kill.sh' 
+                // Start the React development server in the background
+                echo "Starting React development server..."
+                sh 'npm start &'
+                
+                // Wait for the development server to be ready (optional sleep)
+                echo "Waiting for server to start..."
+                sleep(time: 10, unit: 'SECONDS')
+
+                // Output the port on which the React project is running
+                echo "React project is running on port 3000 (default)."
+                // If the port is dynamic, capture it using the `lsof` or other methods:
+                // PORT=$(lsof -i -P -n | grep LISTEN | grep 'node' | awk '{print $9}' | cut -d ':' -f2)
+                // echo "React project is running on port: $PORT"
+                
+                echo "React server is likely running on port 3000 by default, unless specified otherwise in the .env file"
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
             }
+        }
+
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished'
         }
     }
 }

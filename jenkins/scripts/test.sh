@@ -14,5 +14,5 @@ npm -v
 
 echo "tests are running : "
 
-npm start
+npm run test
 echo "Tests completed"
